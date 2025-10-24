@@ -5,6 +5,16 @@ rule all:
 	input:
 		"results/seurat_filtered_pbmc3k.rds"
 
+# Imports matrix files into a AnnData object
+rule import_scanpy:
+	input:
+		"data/{sample}/"
+	output:
+		"results/01_scanpy_import_{sample}.h5ad"
+	conda:
+		"envs/scanpy.yaml"
+	script:
+		"scripts/import-scanpy.py"
 
 # Creates a Seurat object from the matrix, barcode, feature files
 # Applies min.cell = 3, min.features = 200 
