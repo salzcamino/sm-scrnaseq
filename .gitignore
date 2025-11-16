@@ -1,0 +1,48 @@
+# Snakemake
+.snakemake/
+*.snakemake
+
+# Pipeline outputs
+results/
+plots/
+
+# Input data (should be downloaded separately or use git-lfs)
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+*.egg
+.ipynb_checkpoints/
+*.ipynb
+
+# R
+.Rhistory
+.Rdata
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rproj
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local documentation
+CLAUDE.md
