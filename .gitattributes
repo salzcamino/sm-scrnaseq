@@ -1,0 +1,16 @@
+# Force LF line endings for all text files
+* text=auto eol=lf
+
+# Explicitly mark script files as text
+*.py text eol=lf
+*.R text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+
+# Keep binary files as-is
+*.png binary
+*.h5ad binary
+*.rds binary
+*.mtx binary
