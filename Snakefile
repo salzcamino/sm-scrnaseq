@@ -8,6 +8,12 @@ rule all:
 		expand("results/scanpy_filtered_{sample}.h5ad", sample=config["samples"].keys()),
 		expand("results/seurat_filtered_{sample}.rds", sample=config["samples"].keys())
 
+# Creates QC plots for all samples
+rule qc_plots:
+	input:
+		expand("plots/{sample}_scanpy_qc.png", sample=config["samples"].keys()),
+		expand("plots/{sample}_seurat_qc.png", sample=config["samples"].keys())
+
 # Imports matrix files into a AnnData object
 rule import_scanpy:
 	input:
@@ -18,6 +24,17 @@ rule import_scanpy:
 		"envs/scanpy.yaml"
 	script:
 		"scripts/import-scanpy.py"
+
+# Plots the QC metrics for the Scanpy object
+rule qc_plots_scanpy:
+	input:
+		"results/scanpy_import_{sample}.h5ad"
+	output:
+		"plots/{sample}_scanpy_qc.png"
+	conda:
+		"envs/scanpy.yaml"
+	script:
+		"scripts/plot-qc-scanpy.py"
 
 # Filters object after adding mitochondrial read counts
 rule filter_scanpy:
@@ -41,6 +58,17 @@ rule import_seurat:
 		"envs/seurat.yaml"
 	script:
 		"scripts/import-seurat.R"
+
+# Plots the QC metrics for the Scanpy object
+rule qc_plots_seurat:
+	input:
+		"results/seurat_import_{sample}.rds"
+	output:
+		"plots/{sample}_seurat_qc.png"
+	conda:
+		"envs/seurat.yaml"
+	script:
+		"scripts/plot-qc-seurat.R"
 
 # Filters object after adding mitochondrial read counts
 rule filter_seurat:
