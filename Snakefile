@@ -1,10 +1,12 @@
 #!/usr/bin/snakemake
 
+configfile: "config.yaml"
+
 # Creates all intended outputs from the example pbmc3k dataset
 rule all:
 	input:
-		"results/scanpy_filtered_pbmc3k.h5ad",
-		"results/seurat_filtered_pbmc3k.rds"
+		expand("results/scanpy_filtered_{sample}.h5ad", sample=config["samples"].keys()),
+		expand("results/seurat_filtered_{sample}.rds", sample=config["samples"].keys())
 
 # Imports matrix files into a AnnData object
 rule import_scanpy:
