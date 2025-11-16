@@ -8,5 +8,6 @@ params = snakemake.config["samples"][sample]
 sc.pp.filter_cells(adata, min_genes=params["min_genes"])
 sc.pp.filter_genes(adata, min_cells=params["min_cells"])
 adata = adata[adata.obs['pct_counts_mt'] < params["max_mt_percent"], :]
+adata = adata[(adata.obs['n_genes_by_counts'] < params["max_genes"]), :]
 
 adata.write(snakemake.output[0])

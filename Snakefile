@@ -48,7 +48,6 @@ rule filter_scanpy:
 		"scripts/filter-scanpy.py"
 
 # Creates a Seurat object from the matrix, barcode, feature files
-# Applies min.cell = 3, min.features = 200 
 rule import_seurat:
 	input:
 		"data/{sample}/"
@@ -59,7 +58,7 @@ rule import_seurat:
 	script:
 		"scripts/import-seurat.R"
 
-# Plots the QC metrics for the Scanpy object
+# Plots the QC metrics for the Seurat object
 rule qc_plots_seurat:
 	input:
 		"results/seurat_import_{sample}.rds"
