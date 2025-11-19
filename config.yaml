@@ -5,8 +5,10 @@ samples:
     max_genes: 2500
     max_mt_percent: 5
     min_cells: 3
+    var_features: 2000
   pbmc8k:
     min_genes: 200
     max_genes: 2500
     max_mt_percent: 5
     min_cells: 3
+    var_features: 2000
