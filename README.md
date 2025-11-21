@@ -5,38 +5,36 @@ Snakemake pipeline for scRNA-seq QC using Scanpy and Seurat.
 ## Pipeline DAG
 
 ```mermaid
-graph LR
-    A[data/sample/] --> B[import_scanpy]
-    A --> C[import_seurat]
+graph TB
+    subgraph Input
+        DATA[("data/{sample}/")]
+    end
 
-    B --> D[qc_plots_scanpy]
-    B --> E[filter_scanpy]
+    subgraph Scanpy["Scanpy Track"]
+        IMP_SC[import_scanpy] --> QC_SC[qc_plots_scanpy]
+        IMP_SC --> FILT_SC[filter_scanpy]
+        FILT_SC --> NORM_SC[normalize_scanpy]
+        NORM_SC --> FEAT_SC[feat_select_scanpy]
+        FEAT_SC --> SCALE_SC[scale_scanpy]
+    end
 
-    C --> F[qc_plots_seurat]
-    C --> G[filter_seurat]
+    subgraph Seurat["Seurat Track"]
+        IMP_SR[import_seurat] --> QC_SR[qc_plots_seurat]
+        IMP_SR --> FILT_SR[filter_seurat]
+        FILT_SR --> NORM_SR[normalize_seurat]
+        NORM_SR --> FEAT_SR[feat_select_seurat]
+        FEAT_SR --> SCALE_SR[scale_seurat]
+    end
 
-    D --> H[sample_scanpy_qc.png]
-    E --> I[scanpy_filtered.h5ad]
-    F --> J[sample_seurat_qc.png]
-    G --> K[seurat_filtered.rds]
+    DATA --> IMP_SC
+    DATA --> IMP_SR
 
-    E --> L[normalize_scanpy]
-    G --> M[normalize_seurat]
-
-    L --> N[scanpy_normalized.h5ad]
-    M --> O[seurat_normalized.rds]
-
-    L --> P[feat_select_scanpy]
-    M --> Q[feat_select_seurat]
-
-    P --> R[scanpy_feat_selected.h5ad]
-    Q --> S[seurat_feat_selected.rds]
-
-    P --> T[scale_scanpy]
-    Q --> U[scale_seurat]
-
-    T --> V[scanpy_scaled.h5ad]
-    U --> W[seurat_scaled.rds]
+    subgraph Outputs
+        QC_SC --> QC_PNG_SC(("{sample}_scanpy_qc.png"))
+        SCALE_SC --> SCALED_SC(("scanpy_scaled_{sample}.h5ad"))
+        QC_SR --> QC_PNG_SR(("{sample}_seurat_qc.png"))
+        SCALE_SR --> SCALED_SR(("seurat_scaled_{sample}.rds"))
+    end
 ```
 
 ## Usage
