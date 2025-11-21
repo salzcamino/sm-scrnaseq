@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import scanpy as sc
 
-var_features = snakemake.config["samples"][snakemake.wildcards.sample]["var_features"]
+sample = snakemake.wildcards.sample
+var_features = snakemake.config["samples"][sample]["var_features"]
 
 adata = sc.read_h5ad(snakemake.input[0])
 sc.pp.highly_variable_genes(adata, n_top_genes=var_features, batch_key="sample")

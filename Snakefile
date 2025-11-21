@@ -5,8 +5,8 @@ configfile: "config.yaml"
 # Creates all intended outputs from the example pbmc3k dataset
 rule all:
 	input:
-		expand("results/scanpy_filtered_{sample}.h5ad", sample=config["samples"].keys()),
-		expand("results/seurat_filtered_{sample}.rds", sample=config["samples"].keys())
+		expand("results/scanpy_scaled_{sample}.h5ad", sample=config["samples"].keys()),
+		expand("results/seurat_scaled_{sample}.rds", sample=config["samples"].keys())
 
 # Creates QC plots for all samples
 rule qc_plots:
