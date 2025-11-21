@@ -19,6 +19,24 @@ graph LR
     E --> I[scanpy_filtered.h5ad]
     F --> J[sample_seurat_qc.png]
     G --> K[seurat_filtered.rds]
+
+    E --> L[normalize_scanpy]
+    G --> M[normalize_seurat]
+
+    L --> N[scanpy_normalized.h5ad]
+    M --> O[seurat_normalized.rds]
+
+    L --> P[feat_select_scanpy]
+    M --> Q[feat_select_seurat]
+
+    P --> R[scanpy_feat_selected.h5ad]
+    Q --> S[seurat_feat_selected.rds]
+
+    P --> T[scale_scanpy]
+    Q --> U[scale_seurat]
+
+    T --> V[scanpy_scaled.h5ad]
+    U --> W[seurat_scaled.rds]
 ```
 
 ## Usage
