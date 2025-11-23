@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(Seurat)
 # Read Seurat object
 data.seurat <- readRDS(snakemake@input[[1]])

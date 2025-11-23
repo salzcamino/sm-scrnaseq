@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env/python3
 import scanpy as sc
 
 sample = snakemake.wildcards.sample

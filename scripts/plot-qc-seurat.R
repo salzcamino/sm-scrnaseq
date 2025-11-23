@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(Seurat)
 library(patchwork)
 # Read Seurat object

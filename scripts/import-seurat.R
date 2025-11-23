@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(Seurat)
 # Read 10X data into counts matrix
 data.counts <- Read10X(data.dir = snakemake@input[[1]])
