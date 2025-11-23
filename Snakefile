@@ -1,4 +1,4 @@
-#!/usr/bin/snakemake
+#!/usr/bin/env snakemake
 
 configfile: "config.yaml"
 
@@ -20,6 +20,8 @@ rule import_scanpy:
 		"data/{sample}/"
 	output:
 		"results/scanpy_import_{sample}.h5ad"
+	log:
+		"logs/import_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
@@ -31,10 +33,13 @@ rule import_seurat:
 		"data/{sample}/"
 	output:
 		"results/seurat_import_{sample}.rds"
+	log:
+		"logs/import_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
 		"scripts/import-seurat.R"
+
 
 # Plots the QC metrics for the Scanpy object
 rule qc_plots_scanpy:
@@ -42,6 +47,8 @@ rule qc_plots_scanpy:
 		"results/scanpy_import_{sample}.h5ad"
 	output:
 		"plots/{sample}_scanpy_qc.png"
+	log:
+		"logs/qc_plots_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
@@ -53,6 +60,8 @@ rule qc_plots_seurat:
 		"results/seurat_import_{sample}.rds"
 	output:
 		"plots/{sample}_seurat_qc.png"
+	log:
+		"logs/qc_plots_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
@@ -64,10 +73,13 @@ rule filter_scanpy:
 		"results/scanpy_import_{sample}.h5ad"
 	output:
 		"results/scanpy_filtered_{sample}.h5ad"
+	log:
+		"logs/filter_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
 		"scripts/filter-scanpy.py"
+
 
 # Filters object after adding mitochondrial read counts
 rule filter_seurat:
@@ -75,6 +87,8 @@ rule filter_seurat:
 		"results/seurat_import_{sample}.rds"
 	output:
 		"results/seurat_filtered_{sample}.rds"
+	log:
+		"logs/filter_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
@@ -86,6 +100,8 @@ rule normalize_scanpy:
 		"results/scanpy_filtered_{sample}.h5ad"
 	output:
 		"results/scanpy_normalized_{sample}.h5ad"
+	log:
+		"logs/normalize_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
@@ -97,6 +113,8 @@ rule normalize_seurat:
 		"results/seurat_filtered_{sample}.rds"
 	output:
 		"results/seurat_normalized_{sample}.rds"
+	log:
+		"logs/normalize_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
@@ -108,6 +126,8 @@ rule feat_select_scanpy:
 		"results/scanpy_normalized_{sample}.h5ad"
 	output:
 		"results/scanpy_feat_selected_{sample}.h5ad"
+	log:
+		"logs/feat_select_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
@@ -119,6 +139,8 @@ rule feat_select_seurat:
 		"results/seurat_normalized_{sample}.rds"
 	output:
 		"results/seurat_feat_selected_{sample}.rds"
+	log:
+		"logs/feat_select_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
@@ -130,10 +152,13 @@ rule scale_scanpy:
 		"results/scanpy_feat_selected_{sample}.h5ad"
 	output:
 		"results/scanpy_scaled_{sample}.h5ad"
+	log:
+		"logs/scale_scanpy_{sample}.log"
 	conda:
 		"envs/scanpy.yaml"
 	script:
 		"scripts/scale-scanpy.py"
+
 
 # Scales HVGs with Seurat
 rule scale_seurat:
@@ -141,7 +166,10 @@ rule scale_seurat:
 		"results/seurat_feat_selected_{sample}.rds"
 	output:
 		"results/seurat_scaled_{sample}.rds"
+	log:
+		"logs/scale_seurat_{sample}.log"
 	conda:
 		"envs/seurat.yaml"
 	script:
 		"scripts/scale-seurat.R"
+
