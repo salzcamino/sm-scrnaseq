@@ -4,8 +4,8 @@ library(Seurat)
 data.counts <- Read10X(data.dir = snakemake@input[[1]])
 sample <- snakemake@wildcards[["sample"]]
 params <- snakemake@config[["samples"]][[sample]]
-# Create Seurat object, remove features with counts in fewer than 3 cells, remove cells with fewer than 200 features
-data.seurat <- CreateSeuratObject(counts = data.counts, project = sample, min.cells = params$min_cells, min.features = params$min_genes)
+# Create Seurat object
+data.seurat <- CreateSeuratObject(counts = data.counts, project = sample)
 # Add mitochondrial read percentage
 data.seurat[["percent.mt"]] <- PercentageFeatureSet(data.seurat, pattern = "^MT-")
 
