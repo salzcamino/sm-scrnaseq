@@ -1,5 +1,10 @@
 #!/usr/bin/env Rscript
 library(Seurat)
+# Redirect output and messages to log file
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log, type = "output")
+sink(log, type = "message")
+
 # Read 10X data into counts matrix
 data.counts <- Read10X(data.dir = snakemake@input[[1]])
 sample <- snakemake@wildcards[["sample"]]
@@ -12,3 +17,7 @@ data.seurat[["percent.rb"]] <- PercentageFeatureSet(data.seurat, pattern = "^RPS
 data.seurat[["percent.hb"]] <- PercentageFeatureSet(data.seurat, pattern = "^HB[^(P)]")
 
 saveRDS(data.seurat, file = snakemake@output[[1]])
+
+# Close log file
+sink(type = "message")
+sink(type = "output")

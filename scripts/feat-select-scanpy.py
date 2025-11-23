@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import scanpy as sc
+import sys
+# Redirect stderr to log file
+sys.stderr = open(snakemake.log[0], "w")
 
 sample = snakemake.wildcards.sample
 var_features = snakemake.config["samples"][sample]["var_features"]

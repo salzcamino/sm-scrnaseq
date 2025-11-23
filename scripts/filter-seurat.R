@@ -1,5 +1,10 @@
 #!/usr/bin/env Rscript
 library(Seurat)
+# Redirect output and messages to log file
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log, type = "output")
+sink(log, type = "message")
+
 # Read Seurat object
 data.seurat <- readRDS(snakemake@input[[1]])
 sample <- snakemake@wildcards[["sample"]]
@@ -14,3 +19,7 @@ data.seurat <- subset(data.seurat, features = genes.keep)
 data.seurat <- subset(data.seurat, subset = nFeature_RNA >= params$min_genes & nFeature_RNA < params$max_genes & percent.mt < params$max_mt_percent)
 
 saveRDS(data.seurat, snakemake@output[[1]])
+
+# Close log file
+sink(type = "message")
+sink(type = "output")
